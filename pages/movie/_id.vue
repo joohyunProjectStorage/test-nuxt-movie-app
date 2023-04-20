@@ -83,11 +83,14 @@ export default {
   components: {
     Loader
   },
-  data() {
+  async ayncData({ store, params}) {    
+    await store.dispatch('movie/searchMovieWithId', {
+      id: params.id
+    })
     return {
       imageLoading: true
     }
-  },
+  }, 
   computed: {
     ...mapState('movie', [
       'loading',
@@ -95,9 +98,7 @@ export default {
     ])
   },
   created() {
-    this.$store.dispatch('movie/searchMovieWithId', {
-      id: this.$route.params.id
-    })
+    
   },
   methods: {
     requestDiffSizeImage(url, size = 700) {
